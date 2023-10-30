@@ -68,7 +68,7 @@ jobs:
           poetry run mypy --config-file=pyproject.toml .
       - name: Test with pytest
         run: |
-          poetry run pytest --cov src --cov-fail-under=95 --cov-report term-missing
+          poetry run pytest --cov src --cov-fail-under=95 --cov-report term-missing xml
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
