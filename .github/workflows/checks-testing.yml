@@ -13,7 +13,7 @@ jobs:
       contents: read
       security-events: write
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         language: ["python"]
     steps:
@@ -37,28 +37,35 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
     steps:
-      - name: Cache pip packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
       - uses: actions/checkout@v3
+      - name: Install poetry
+        run: |
+          curl -O -sSL https://install.python-poetry.org/install-poetry.py
+          python install-poetry.py -y --version 1.6.1
+          echo "PATH=${HOME}/.poetry/bin:${PATH}" >> $GITHUB_ENV
+          rm install-poetry.py
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Run Python checks and tests
+          cache: "poetry"
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "poetry"
+      - name: Install dependencies and project
         run: |
-          python --version
-          python -m venv env
-          source env/bin/activate
-          pip install "passsssword[develop, test]"
-          black --check ./python/passsssword  ./tests
-          mypy --config-file=pyproject.toml .
-          ruff ./passsssword ./tests
-          pytest --cov tests/python --cov-fail-under=95 --cov-report term-missing
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          poetry env use ${{ matrix.python-version }}
+          poetry install --with test
+      - name: Format with ruff
+        run: |
+          poetry run ruff ./src/passsssword  ./tests
+      - name: Check with black
+        run: |
+          poetry run black --check ./src/passsssword  ./tests
+      - name: Check with mypy
+        run: |
+          poetry run mypy --config-file=pyproject.toml .
+      - name: Test with pytest
+        run: |
+          poetry run pytest --cov src/passsssword --cov-fail-under=95 --cov-report term-missing
