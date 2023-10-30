@@ -2,7 +2,7 @@ name: ChecksAndTesting
 
 on:
   pull_request:
-    branches: [develop]
+    branches: [main, develop]
 
 jobs:
   analyze:
