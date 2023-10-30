@@ -16,7 +16,7 @@
 
 ## Introduction
 
-Passsssword is a Python-based utility designed to securely manage your 1Password vault data right within your Python scripts. Utilizing Python decorators and context managers, the project interfaces with the 1Password CLI to automatically fetch and inject sensitive data, such as passwords or API-keys.
+Passsssword is a Python-based utility designed to securely use your 1Password vault data right within your Python scripts. Utilizing Python decorators and context managers, the project interfaces with the 1Password CLI to automatically fetch and inject sensitive data, such as passwords or API-keys.
 
 Passsssword offers two features:
 
@@ -35,7 +35,7 @@ Passsssword offers two features:
 
 1. **Clone the Repository:**
    ```
-   git clone https://github.com/chrislemke/Passsssword.git
+   git clone https://github.com/chrislemke/passsssword.git
    ```
 
 2. **Navigate to Project Directory:**
