@@ -1,0 +1,60 @@
+name: ChecksAndTesting
+
+on:
+  pull_request:
+    branches: [develop]
+
+jobs:
+  analyze:
+    name: Analyze code quality
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["python"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: "/language:${{matrix.language}}"
+
+  python_testing:
+    name: Python checks and tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - name: Cache pip packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run Python checks and tests
+        run: |
+          python --version
+          python -m venv env
+          source env/bin/activate
+          pip install "passsssword[develop, test]"
+          black --check ./python/passsssword  ./tests
+          mypy --config-file=pyproject.toml .
+          ruff ./passsssword ./tests
+          pytest --cov tests/python --cov-fail-under=95 --cov-report term-missing
