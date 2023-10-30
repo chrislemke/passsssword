@@ -1,4 +1,4 @@
-![The Transformer](https://raw.githubusercontent.com/chrislemke/sk-transformers/master/docs/assets/images/icon.png)
+![The Transformer](https://raw.githubusercontent.com/chrislemke/passsssword/master/docs/assets/icon.png)
 
 # Passsssword
 ***Utilize 1Password vault data with Python decorators and context managers. Driven by the 1Password CLI interface. 🐍🔐***
