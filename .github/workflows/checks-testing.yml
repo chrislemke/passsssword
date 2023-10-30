@@ -59,10 +59,10 @@ jobs:
           poetry install --with tests,develop
       - name: Format with ruff
         run: |
-          poetry run ruff ./src/passsssword  ./tests
+          poetry run ruff ./src  ./tests
       - name: Check with black
         run: |
-          poetry run black --check ./src/passsssword  ./tests
+          poetry run black --check ./src  ./tests
       - name: Check with mypy
         run: |
           poetry run mypy --config-file=pyproject.toml .
