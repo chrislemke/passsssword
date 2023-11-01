@@ -5,7 +5,6 @@
 
 [![ChecksAndTesting](https://github.com/chrislemke/passsssword/actions/workflows/checks-testing.yml/badge.svg)](https://github.com/chrislemke/passsssword/actions/workflows/checks-testing.yml)
 [![codecov](https://codecov.io/github/chrislemke/passsssword/branch/main/graph/badge.svg?token=LJLXQXX6M8)](https://codecov.io/github/chrislemke/passsssword)
-[![Release](https://github.com/chrislemke/passsssword/actions/workflows/release.yml/badge.svg)](https://github.com/chrislemke/passsssword/actions/workflows/release.yml)
 [![pypi](https://img.shields.io/pypi/v/passsssword)](https://pypi.org/project/passsssword/)
 [![python version](https://img.shields.io/pypi/pyversions/passsssword?logo=python&logoColor=yellow)](https://www.python.org/)
 [![license](https://img.shields.io/github/license/chrislemke/passsssword)](https://github.com/chrislemke/passsssword/blob/main/LICENSE)
